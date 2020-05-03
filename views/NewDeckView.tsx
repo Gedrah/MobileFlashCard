@@ -6,7 +6,7 @@ export default class NewDeckView extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Hello, I am your class!</Text>
+                <Text>New Deck View</Text>
             </View>
         )
     }

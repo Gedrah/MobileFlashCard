@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import DeckCard from "../components/DeckCard";
 
 
@@ -53,16 +53,36 @@ export default class DeckListView extends Component {
                     answer: 'The combination of a function and the lexical environment within which that function was declared.'
                 }
             ]
+        },
+        Test3: {
+            title: 'JavaScript',
+            questions: [
+                {
+                    question: 'What is a closure?',
+                    answer: 'The combination of a function and the lexical environment within which that function was declared.'
+                }
+            ]
+        },
+        Test4: {
+            title: 'JavaScript',
+            questions: [
+                {
+                    question: 'What is a closure?',
+                    answer: 'The combination of a function and the lexical environment within which that function was declared.'
+                }
+            ]
         }
     };
 
     render() {
         return (
             <View style={styles.container}>
-                {Object.keys(this.decks).map((deckName) => {
-                    // @ts-ignore
-                    return <DeckCard key={deckName} deck={this.decks[deckName]}/>
-                })}
+                <ScrollView style={styles.scrollView}>
+                    {Object.keys(this.decks).map((deckName) => {
+                        // @ts-ignore
+                        return <DeckCard key={deckName} deck={this.decks[deckName]} />
+                    })}
+                </ScrollView>
             </View>
         )
     }
@@ -74,6 +94,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: '10px'
+        alignSelf: 'stretch',
     },
+    scrollView: {
+        alignSelf: 'stretch',
+    }
 });

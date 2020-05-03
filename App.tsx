@@ -1,20 +1,20 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import DeckListView from "./views/DeckListView";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeView from "./views/HomeView";
+import DeckView from "./views/DeckView";
 
-export default function App() {
-  return (
-    <View >
-      <DeckListView/>
-    </View>
-  );
+const Stack = createStackNavigator();
+
+function App() {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="FlashCard">
+                <Stack.Screen name="FlashCard" component={HomeView} />
+                <Stack.Screen name="Deck" component={DeckView} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

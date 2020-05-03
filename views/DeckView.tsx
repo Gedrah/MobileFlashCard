@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
+interface DeckViewProps {
+    route: any
+}
 
-export default class DeckView extends Component {
+export default class DeckView extends Component<DeckViewProps> {
     render() {
+        const {route} = this.props;
+        const deck = route.params.deck;
         return (
             <View style={styles.container}>
-                <Text>Hello, I am your class!</Text>
+                <Text>Deck : {deck.title}</Text>
             </View>
         )
     }

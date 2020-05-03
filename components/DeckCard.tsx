@@ -1,27 +1,20 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-interface DeckCardProps {
-    deck: any
-}
+export default function DeckCard(props: any) {
+    const navigation = useNavigation();
 
-export default class DeckCard extends Component<DeckCardProps> {
 
-    openDeck() {
-        console.log('open deck ' + this.props.deck.title);
-    }
-
-    render() {
-        const {deck} = this.props;
-        const title = deck.title;
-        const numberOfCards = deck.questions.length;
-        return (
-            <TouchableOpacity style={styles.container} onPress={() => this.openDeck()}>
-                <Text style={styles.title}>{title}</Text>
-                <Text>{numberOfCards} cards</Text>
-            </TouchableOpacity>
-        )
-    }
+    const title = props.deck.title;
+    const numberOfCards = props.deck.questions.length;
+    return (
+        <TouchableOpacity style={styles.container}
+                          onPress={() => navigation.navigate('Deck', {deck: props.deck})}>
+            <Text style={styles.title}>{title}</Text>
+            <Text>{numberOfCards} cards</Text>
+        </TouchableOpacity>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -30,13 +23,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF5EE',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: '10px',
-        paddingTop: '3rem',
-        paddingBottom: '3rem',
+        paddingTop: 50,
+        paddingBottom: 50,
         borderRadius: 5,
-        border: 'solid 10px',
-        width: '100%',
-        boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)'
+        alignSelf: 'stretch',
+        shadowColor: 'rgba(0,0,0,0.2)',
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 4,
+        margin: 10
     },
     title: {
         fontSize: 18,
