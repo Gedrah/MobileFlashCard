@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeView from "./views/HomeView";
 import DeckView from "./views/DeckView";
+import NewQuestionView from "./views/NewQuestionView";
+import QuizView from "./views/QuizView";
 
 const Stack = createStackNavigator();
 
@@ -11,7 +13,9 @@ function App() {
         <NavigationContainer>
             <Stack.Navigator initialRouteName="FlashCard">
                 <Stack.Screen name="FlashCard" component={HomeView} />
-                <Stack.Screen name="Deck" component={DeckView} />
+                <Stack.Screen options={(option: any) => ({ title: option.route.params.deck.title })} name="Deck" component={DeckView} />
+                <Stack.Screen name="Add Card" component={NewQuestionView} />
+                <Stack.Screen name="Quiz" component={QuizView} />
             </Stack.Navigator>
         </NavigationContainer>
     );

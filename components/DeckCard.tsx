@@ -1,11 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function DeckCard(props: any) {
     const navigation = useNavigation();
-
-
     const title = props.deck.title;
     const numberOfCards = props.deck.questions.length;
     return (

@@ -6,7 +6,7 @@ export default class NewQuestionView extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Hello, I am your class!</Text>
+                <Text>Add Card</Text>
             </View>
         )
     }
