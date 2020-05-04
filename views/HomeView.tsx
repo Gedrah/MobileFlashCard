@@ -3,7 +3,7 @@ import DeckListView from "./DeckListView";
 import NewDeckView from "./NewDeckView";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 // @ts-ignore
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionics from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +22,7 @@ function HomeView() {
                         iconName = focused ? 'ios-add-circle' : 'ios-add-circle-outline';
                     }
 
-                    return <Ionicons name={iconName} size={size} color={color} />;
+                    return <Ionics name={iconName} size={size} color={color} />;
                 },
             })}
         >

@@ -75,12 +75,12 @@ export default class DeckListView extends Component {
     };
 
     render() {
+        const decks = this.decks as any;
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.scrollView}>
-                    {Object.keys(this.decks).map((deckName) => {
-                        // @ts-ignore
-                        return <DeckCard key={deckName} deck={this.decks[deckName]} />
+                    {Object.keys(decks).map((deckName: string) => {
+                        return <DeckCard key={deckName} deck={decks[deckName]} />
                     })}
                 </ScrollView>
             </View>
