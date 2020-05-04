@@ -10,7 +10,7 @@ export default function DeckCard(props: any) {
         <TouchableOpacity style={styles.container}
                           onPress={() => navigation.navigate('Deck', {deck: props.deck})}>
             <Text style={styles.title}>{title}</Text>
-            <Text>{numberOfCards} cards</Text>
+            <Text style={styles.numberOfCards}>{numberOfCards} cards</Text>
         </TouchableOpacity>
     )
 }
@@ -18,7 +18,7 @@ export default function DeckCard(props: any) {
 const styles = StyleSheet.create({
     container: {
         flex: 3,
-        backgroundColor: '#FFF5EE',
+        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: 50,
@@ -32,7 +32,11 @@ const styles = StyleSheet.create({
         margin: 10
     },
     title: {
-        fontSize: 18,
+        fontSize: 30,
         fontWeight: 'bold'
+    },
+    numberOfCards: {
+        fontSize: 15,
+        color: 'gray',
     }
 });

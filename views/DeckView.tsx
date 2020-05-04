@@ -16,10 +16,10 @@ export default function DeckView(props: any) {
                     <Text style={styles.numberOfCards}>{numberOfCards} cards</Text>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.buttonAddCard} onPress={() => navigation.navigate('Add Card', {deck: props.deck})}>
+                    <TouchableOpacity style={styles.buttonAddCard} onPress={() => navigation.navigate('Add Card', {deck: deck})}>
                         <Text>Add Card</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonStartQuiz} onPress={() => navigation.navigate('Quiz', {deck: props.deck})}>
+                    <TouchableOpacity style={styles.buttonStartQuiz} onPress={() => navigation.navigate('Quiz', {deck: deck})}>
                         <Text style={styles.textStartQuiz}>Start Quiz</Text>
                     </TouchableOpacity>
                 </View>
