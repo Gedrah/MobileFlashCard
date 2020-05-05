@@ -16,20 +16,16 @@ export default class NewDeckView extends Component<NewDeckViewProps, NewDeckView
     };
 
     getDecks(title: string) {
-        try {
-            AsyncStorage.getItem('decks').then((datas: any) => {
-                if (datas) {
-                    let decks = JSON.parse(datas);
-                    if (this.checkIfDeckIsValid(title, decks)) {
-                        this.saveDecks(title, decks);
-                    }
-                } else {
-                    this.saveDecks(title, {});
+        AsyncStorage.getItem('decks').then((datas: any) => {
+            if (datas) {
+                let decks = JSON.parse(datas);
+                if (this.checkIfDeckIsValid(title, decks)) {
+                    this.saveDecks(title, decks);
                 }
-            });
-        } catch(error) {
-            console.log(error);
-        }
+            } else {
+                this.saveDecks(title, {});
+            }
+        });
     }
 
     checkIfDeckIsValid(title: string, decks: object) : boolean {
@@ -53,14 +49,10 @@ export default class NewDeckView extends Component<NewDeckViewProps, NewDeckView
             title: title,
             questions: []
         };
-        try {
-            AsyncStorage.setItem('decks', JSON.stringify(decks)).then(() => {
-                this.setState({title: ''});
-                this.props.navigation.goBack();
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
+        AsyncStorage.setItem('decks', JSON.stringify(decks)).then(() => {
+            this.setState({title: ''});
+            this.props.navigation.navigate('Deck', {deck: decks[title]});
+        });
     }
 
     setDeckTitle(title: string) {
@@ -72,10 +64,10 @@ export default class NewDeckView extends Component<NewDeckViewProps, NewDeckView
             <View style={styles.container}>
                 <View style={styles.newDeckContainer}>
                     <Text style={styles.title}>What is the title of your new deck ?</Text>
-                    <TextInput value={this.state.title} style={styles.inputTextName} placeholder="New deck" onChangeText={text => this.setDeckTitle(text)}/>
-
+                    <TextInput value={this.state.title} style={styles.inputTextName}
+                               placeholder="New deck" onChangeText={text => this.setDeckTitle(text)}/>
                     <TouchableOpacity style={styles.buttonSubmit} onPress={() => this.saveNewDeck(this.state.title)}>
-                        <Text style={styles.textButtonSubmit}>Submit</Text>
+                        <Text style={styles.textButtonSubmit}>Create Deck</Text>
                     </TouchableOpacity>
                 </View>
             </View>

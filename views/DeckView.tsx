@@ -19,7 +19,9 @@ export default function DeckView(props: any) {
                     <TouchableOpacity style={styles.buttonAddCard} onPress={() => navigation.navigate('Add Card', {deck: deck})}>
                         <Text>Add Card</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonStartQuiz} onPress={() => navigation.navigate('Quiz', {deck: deck})}>
+                    <TouchableOpacity disabled={numberOfCards === 0}
+                                      style={numberOfCards === 0 ? styles.buttonStartQuizDisabled : styles.buttonStartQuiz}
+                                      onPress={() => navigation.navigate('Quiz', {deck: deck})}>
                         <Text style={styles.textStartQuiz}>Start Quiz</Text>
                     </TouchableOpacity>
                 </View>
@@ -74,6 +76,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#000',
+        height: 60,
+        fontSize: 25,
+    },
+    buttonStartQuizDisabled: {
+        borderRadius: 5,
+        margin: 10,
+        alignSelf: 'stretch',
+        width: 250,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'gray',
         height: 60,
         fontSize: 25,
     },

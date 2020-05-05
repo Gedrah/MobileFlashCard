@@ -1,14 +1,60 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {AsyncStorage, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+
+interface NewQuestionViewProps {
+    navigation: any;
+    route: any;
+}
+
+interface NewQuestionViewState {
+    question: string,
+    answer: string
+}
 
 
-export default class NewQuestionView extends Component {
+export default class NewQuestionView extends Component<NewQuestionViewProps, NewQuestionViewState> {
+    state: NewQuestionViewState = {
+        question: '',
+        answer: ''
+    };
+
+    getDecks(question: string, answer: string) {
+        AsyncStorage.getItem('decks').then((datas: any) => {
+            let decks = JSON.parse(datas);
+            this.saveDecks(question, answer, decks);
+        });
+    }
+
+    saveNewQuestionAnswer(question: string, answer: string) {
+        if (question !== '' && answer !== '') {
+            this.getDecks(question, answer);
+        }
+    }
+
+    saveDecks(question: string, answer: string, decks: any) {
+        let deck = this.props.route.params.deck;
+        deck.questions.push({question: question, answer: answer});
+        decks[deck.title] = deck;
+        AsyncStorage.setItem('decks', JSON.stringify(decks)).then(() => {
+            this.setState({question: '', answer: ''});
+            this.props.navigation.navigate('Deck', {deck: deck});
+        });
+    }
+
+    setQuestion(question: string) {
+        this.setState({question: question})
+    }
+
+    setAnswer(answer: string) {
+        this.setState({answer: answer})
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <TextInput style={styles.inputTextName} placeholder="question"/>
-                <TextInput style={styles.inputTextName} placeholder="answer"/>
-                <TouchableOpacity style={styles.buttonSubmit} onPress={() => {}}>
+                <TextInput value={this.state.question} style={styles.inputTextName} placeholder="question" onChangeText={text => this.setQuestion(text)}/>
+                <TextInput value={this.state.answer} style={styles.inputTextName} placeholder="answer" onChangeText={text => this.setAnswer(text)}/>
+                <TouchableOpacity style={styles.buttonSubmit} onPress={() => this.saveNewQuestionAnswer(this.state.question, this.state.answer)}>
                     <Text style={styles.textButtonSubmit}>Submit</Text>
                 </TouchableOpacity>
                 <View style={styles.spaceContainer}/>

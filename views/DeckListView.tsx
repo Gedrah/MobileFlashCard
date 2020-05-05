@@ -12,36 +12,28 @@ export default class DeckListView extends Component<any, DeckListViewState> {
         decks: {},
     };
 
-    willFocusSubscription: any;
+    focusSubscription: any;
 
     getDecks() {
-        try {
-            console.log("enter get decks");
-            AsyncStorage.getItem('decks').then((decks) => {
-                if (decks) {
-                    this.setState({decks: JSON.parse(decks)});
-                } else {
-                    this.setState({decks: {}});
-                }
-            });
-        } catch(error) {
-            console.log(error)
-        }
+        AsyncStorage.getItem('decks').then((decks) => {
+            if (decks) {
+                this.setState({decks: JSON.parse(decks)});
+            } else {
+                this.setState({decks: {}});
+            }
+        });
     };
 
-    async componentDidMount() {
+    componentDidMount() {
         this.getDecks();
-        this.willFocusSubscription = this.props.navigation.addListener('focus',
-            () => {
-                this.getDecks();
-            }
-        );
+        this.focusSubscription = this.props.navigation.addListener('focus', () => {
+            this.getDecks();
+        });
     }
 
     componentWillUnmount() {
-        this.willFocusSubscription.remove();
+        this.focusSubscription.remove();
     }
-
 
     render() {
         const decks = this.state.decks;
