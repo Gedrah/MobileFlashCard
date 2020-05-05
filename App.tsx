@@ -5,6 +5,7 @@ import HomeView from "./views/HomeView";
 import DeckView from "./views/DeckView";
 import NewQuestionView from "./views/NewQuestionView";
 import QuizView from "./views/QuizView";
+import {AsyncStorage} from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -20,5 +21,7 @@ function App() {
         </NavigationContainer>
     );
 }
+
+
 
 export default App;

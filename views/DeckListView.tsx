@@ -1,88 +1,61 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {AsyncStorage, ScrollView, StyleSheet, View} from 'react-native';
 import DeckCard from "../components/DeckCard";
 
 
-export default class DeckListView extends Component {
-    decks = {
-        React: {
-            title: 'React',
-            questions: [
-                {
-                    question: 'What is React?',
-                    answer: 'A library for managing user interfaces'
-                },
-                {
-                    question: 'Where do you make Ajax requests in React?',
-                    answer: 'The componentDidMount lifecycle event'
+interface DeckListViewState {
+    decks: any,
+}
+
+export default class DeckListView extends Component<any, DeckListViewState> {
+    state: DeckListViewState = {
+        decks: {},
+    };
+
+    willFocusSubscription: any;
+
+    getDecks() {
+        try {
+            console.log("enter get decks");
+            AsyncStorage.getItem('decks').then((decks) => {
+                if (decks) {
+                    this.setState({decks: JSON.parse(decks)});
+                } else {
+                    this.setState({decks: {}});
                 }
-            ]
-        },
-        JavaScript: {
-            title: 'JavaScript',
-            questions: [
-                {
-                    question: 'What is a closure?',
-                    answer: 'The combination of a function and the lexical environment within which that function was declared.'
-                }
-            ]
-        },
-        Test: {
-            title: 'JavaScript',
-            questions: [
-                {
-                    question: 'What is a closure?',
-                    answer: 'The combination of a function and the lexical environment within which that function was declared.'
-                }
-            ]
-        },
-        Test1: {
-            title: 'JavaScript',
-            questions: [
-                {
-                    question: 'What is a closure?',
-                    answer: 'The combination of a function and the lexical environment within which that function was declared.'
-                }
-            ]
-        },
-        Test2: {
-            title: 'JavaScript',
-            questions: [
-                {
-                    question: 'What is a closure?',
-                    answer: 'The combination of a function and the lexical environment within which that function was declared.'
-                }
-            ]
-        },
-        Test3: {
-            title: 'JavaScript',
-            questions: [
-                {
-                    question: 'What is a closure?',
-                    answer: 'The combination of a function and the lexical environment within which that function was declared.'
-                }
-            ]
-        },
-        Test4: {
-            title: 'JavaScript',
-            questions: [
-                {
-                    question: 'What is a closure?',
-                    answer: 'The combination of a function and the lexical environment within which that function was declared.'
-                }
-            ]
+            });
+        } catch(error) {
+            console.log(error)
         }
     };
 
+    async componentDidMount() {
+        this.getDecks();
+        this.willFocusSubscription = this.props.navigation.addListener('focus',
+            () => {
+                this.getDecks();
+            }
+        );
+    }
+
+    componentWillUnmount() {
+        this.willFocusSubscription.remove();
+    }
+
+
     render() {
-        const decks = this.decks as any;
+        const decks = this.state.decks;
+
         return (
             <View style={styles.container}>
-                <ScrollView style={styles.scrollView}>
-                    {Object.keys(decks).map((deckName: string) => {
-                        return <DeckCard key={deckName} deck={decks[deckName]} />
-                    })}
-                </ScrollView>
+                {
+                    decks ?
+                    <ScrollView style={styles.scrollView}>
+                        {Object.keys(decks).map((deckName: string) => {
+                            return <DeckCard key={deckName} deck={decks[deckName]} />
+                        })}
+                    </ScrollView> : ''
+                }
             </View>
         )
     }
