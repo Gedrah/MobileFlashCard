@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {clearNotification, clearScheduleNotification} from "../utils/notificationsHandler";
 
 interface QuizViewProps {
     navigation: any,
@@ -31,6 +32,8 @@ export default class QuizView extends Component<QuizViewProps, QuizViewState> {
         if (this.state.currentCardNumber < numberOfCards - 1) {
             this.setState({currentCardNumber: this.state.currentCardNumber + 1, score: score})
         } else {
+            clearScheduleNotification();
+            clearNotification();
             this.setState({showResult: true, score: score});
         }
     }

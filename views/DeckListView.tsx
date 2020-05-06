@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {AsyncStorage, ScrollView, StyleSheet, View} from 'react-native';
 import DeckCard from "../components/DeckCard";
+import getNotificationInfos from "../utils/notificationsHandler";
 
 
 interface DeckListViewState {
@@ -26,13 +27,16 @@ export default class DeckListView extends Component<any, DeckListViewState> {
 
     componentDidMount() {
         this.getDecks();
+        getNotificationInfos();
         this.focusSubscription = this.props.navigation.addListener('focus', () => {
             this.getDecks();
         });
     }
 
     componentWillUnmount() {
-        this.focusSubscription.remove();
+        if (this.focusSubscription !== undefined) {
+            this.focusSubscription.remove();
+        }
     }
 
     render() {
